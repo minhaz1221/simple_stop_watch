@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Stop Watch</title>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">STOP WATCH</div>
+        <div class="content">
+            <div class="number"> <span class="hour">00</span>:<span class="minute">00</span>:<span class="sec">00</span>:<span class="mlsec">00</span> </div>
+        </div>
+
+        <div class="btn">
+            <button class="start">Start</button>
+            <button class="stop">Stop</button>
+            <button class="reset">Reset</button>
+        </div>
+    </div>
+
+    <script>
+
+        var startButton = document.querySelector(".start");
+        var stopButton = document.querySelector(".stop");
+        var resetButton = document.querySelector(".reset");
+        var hour = document.querySelector(".hour");
+        var minute = document.querySelector(".minute");
+        var sec = document.querySelector(".sec");
+        var mlsec = document.querySelector(".mlsec");
+        let Interval
+        
+        var mlsecValue = 0;
+        var secValue = 0;
+        var minuteValue = 0;
+        var hourValue = 0;
+
+        let x = 0;
+
+        function timerFunction() {
+            mlsecValue++;
+            if( mlsecValue <= 9){
+                mlsec.innerHTML = "0" + mlsecValue;
+            }
+            if( mlsecValue > 9){
+                mlsec.innerHTML = mlsecValue;
+            }
+            if( mlsecValue >= 99){
+                secValue ++;
+                sec.innerHTML = "0" + secValue;
+                if(secValue > 9){
+                    sec.innerHTML = secValue;
+                }
+                if(secValue == 60){
+                    sec.innerHTML ="00";
+                }
+                if(secValue >= 60){
+                        minuteValue++
+                        minute.innerHTML = '0' + minuteValue;
+                        if(minuteValue >= 9){
+                            minute.innerHTML = minuteValue;
+                        }
+                        if(minuteValue == 60){
+                            minute.innerHTML ="00";
+                         }
+                        if(minuteValue >= 60) {
+                                hourValue++
+                                hour.innerHTML = "0" + hourValue;
+                                if(hourValue >= 59){
+                                    hour.innerHTML = hourValue;
+                                }
+                                minuteValue = 0;
+                        }
+                        secValue = 0;
+                }
+                mlsecValue = 0; 
+            }
+        };
+        
+        startButton.addEventListener('click', function(){
+            if( x == 0){
+                Interval = setInterval(timerFunction,10);
+                console.log(mlsecValue)
+                x = 1;
+            }
+            
+        });
+
+        stopButton.addEventListener('click', function(){
+            if(x == 1) {
+                clearInterval(Interval);
+                x= 0;
+            }
+        });
+
+        resetButton.addEventListener('click', function(){
+            if(x == 1 || x == 0 ) {
+                clearInterval(Interval);
+                mlsecValue = 0;
+                secValue = 0;
+                minuteValue = 0;
+                hourValue = 0;
+                mlsec.innerHTML = "00";
+                sec.innerHTML = "00";
+                minute.innerHTML = "00";
+                hour.innerHTML = "00";
+                x = 0;
+            }
+        });
+
+    </script>
+</body>
+</html>
